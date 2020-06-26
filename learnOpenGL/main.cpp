@@ -2,6 +2,7 @@
 #include <GLFW/glfw3.h>
 
 #include <iostream>
+#include "cGLSL.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window);
@@ -9,6 +10,15 @@ void processInput(GLFWwindow* window);
 // settings
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
+
+//vertic point
+float vertices[] =
+{
+	-0.5f, -0.5f, 0.0f,
+	0.5f, -0.5f, 0.0f,
+	0.0f, 0.5f, 0.0f
+};
+
 
 int main()
 {
@@ -43,6 +53,44 @@ int main()
 		return -1;
 	}
 
+	/*************************** gl work ******************************/
+	//create VAO
+	unsigned int VAO;
+	glGenVertexArrays(1, &VAO);
+	glBindVertexArray(VAO);
+
+	//get vertex data buffer
+	unsigned int VBO;
+	glGenBuffers(1, &VBO);
+	//1. 复制顶点信息到缓冲中供opengl使用
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	//2. 设置顶点属性指针
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GL_FLOAT), (void*)0);
+	glEnableVertexAttribArray(0);
+
+	//create vertex shader object
+	unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
+	glShaderSource(vertexShader, 1, &vertexShaderSrc, NULL);
+	checkShader(vertexShader);
+
+	//create fragment shader
+	unsigned int fragementShader = glCreateShader(GL_FRAGMENT_SHADER);
+	glShaderSource(fragementShader, 1, &fragmentShaderSrc, NULL);
+	checkShader(fragementShader);
+
+	//link shaders
+	unsigned int shaderProgram = glCreateProgram();
+	glAttachShader(shaderProgram, vertexShader);
+	glAttachShader(shaderProgram, fragementShader);
+	glLinkProgram(shaderProgram);
+	checkLinks(shaderProgram);
+	
+	//clear shader
+	glDeleteShader(vertexShader);
+	glDeleteShader(fragementShader);
+
+
 	// render loop
 	// -----------
 	while (!glfwWindowShouldClose(window))
@@ -55,6 +103,12 @@ int main()
 		// ------
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
+		
+		//draw
+		//-----------------
+		glUseProgram(shaderProgram);
+		glBindVertexArray(VAO);
+		glDrawArrays(GL_TRIANGLES, 0, 3);
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------
