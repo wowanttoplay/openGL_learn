@@ -4,6 +4,7 @@
 #include <iostream>
 #include "cGLSL.h"
 
+
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window);
 
@@ -11,13 +12,7 @@ void processInput(GLFWwindow* window);
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 
-//vertic point
-float vertices[] =
-{
-	-0.5f, -0.5f, 0.0f,
-	0.5f, -0.5f, 0.0f,
-	0.0f, 0.5f, 0.0f
-};
+
 
 
 int main()
@@ -59,15 +54,30 @@ int main()
 	glGenVertexArrays(1, &VAO);
 	glBindVertexArray(VAO);
 
-	//get vertex data buffer
-	unsigned int VBO;
-	glGenBuffers(1, &VBO);
-	//1. 复制顶点信息到缓冲中供opengl使用
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+//get vertex data buffer
+unsigned int VBO;
+glGenBuffers(1, &VBO);
+//1. 复制顶点信息到缓冲中供opengl使用
+glBindBuffer(GL_ARRAY_BUFFER, VBO);
+glBufferData(GL_ARRAY_BUFFER, sizeof(verticesQuard), verticesQuard, GL_STATIC_DRAW);
+
+
+
+//get EBO
+unsigned int EBO;
+glGenBuffers(1, &EBO);
+//1. 复制顶点的索引信息到EBO中
+glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+
+
+
 	//2. 设置顶点属性指针
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GL_FLOAT), (void*)0);
 	glEnableVertexAttribArray(0);
+
+	glBindVertexArray(0);
 
 	//create vertex shader object
 	unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
@@ -81,15 +91,8 @@ int main()
 
 	//link shaders
 	unsigned int shaderProgram = glCreateProgram();
-	glAttachShader(shaderProgram, vertexShader);
-	glAttachShader(shaderProgram, fragementShader);
-	glLinkProgram(shaderProgram);
-	checkLinks(shaderProgram);
-	
-	//clear shader
-	glDeleteShader(vertexShader);
-	glDeleteShader(fragementShader);
-
+	vector<unsigned int>shaderVec = { vertexShader, fragementShader };
+	glLink(shaderVec, shaderProgram);
 
 	// render loop
 	// -----------
@@ -108,13 +111,28 @@ int main()
 		//-----------------
 		glUseProgram(shaderProgram);
 		glBindVertexArray(VAO);
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+
+		//glDrawArrays(GL_TRIANGLES, 0, 3);
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+		
+		glBindVertexArray(0);
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
+
+	glDeleteVertexArrays(1, &VAO);
+#ifdef USE_VBO
+	glDeleteBuffers(1, &VBO);
+#endif
+#ifdef USE_EBO
+	glDeleteBuffers(1, &EBO);
+#endif
+	glDeleteProgram(shaderProgram);
 
 	// glfw: terminate, clearing all previously allocated GLFW resources.
 	// ------------------------------------------------------------------

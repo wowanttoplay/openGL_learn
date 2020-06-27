@@ -1,6 +1,32 @@
 #pragma
+
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+
 #include <string>
+#include <vector>
 using namespace std;
+
+float vertices[] =
+{
+	-0.5f, -0.5f, 0.0f,
+	0.5f, -0.5f, 0.0f,
+	0.0f, 0.5f, 0.0f
+};
+
+float verticesQuard[] =
+{
+	0.5f, 0.5f, 0.0f,
+	0.5f, -0.5f, 0.0f,
+	-0.5f, -0.5f, 0.0f,
+	-0.5f, 0.5f, 0.0f
+};
+
+unsigned int indices[] =
+{
+	0, 1, 3,
+	1, 2, 3
+};
 
 const char* vertexShaderSrc = "#version 330 core\n"
 "layout (location = 0) in vec3 aPos;\n"
@@ -40,5 +66,21 @@ void checkLinks(unsigned int linkProgram)
 	{
 		glGetProgramInfoLog(linkProgram, 512, NULL, infoLog);
 		std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
+	}
+}
+
+//link shader program and delete shader
+void glLink(vector<unsigned int> shader, unsigned int program)
+{
+	for (unsigned int cell : shader)
+	{
+		glAttachShader(program, cell);
+	}
+	glLinkProgram(program);
+	checkLinks(program);
+
+	for (unsigned int cell : shader)
+	{
+		glDeleteShader(cell);
 	}
 }
