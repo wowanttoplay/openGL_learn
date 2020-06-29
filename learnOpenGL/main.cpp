@@ -14,9 +14,9 @@ const unsigned int SCR_HEIGHT = 600;
 //vertic point
 float vertices[] =
 {
-	-0.5f, -0.5f, 0.0f,
-	0.5f, -0.5f, 0.0f,
-	0.0f, 0.5f, 0.0f
+	-0.5f, -0.5f, 0.0f,		1.0f, 0.0f, 0.0f,
+	0.5f, -0.5f, 0.0f,		0.0f, 1.0f, 0.0f,
+	0.0f, 0.5f, 0.0f,			0.0f, 0.0f, 1.0f
 };
 
 
@@ -66,8 +66,11 @@ int main()
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 	//2. 设置顶点属性指针
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GL_FLOAT), (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GL_FLOAT), (void*)0);
 	glEnableVertexAttribArray(0);
+	//3. 设置颜色属性
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GL_FLOAT), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
 
 	//create vertex shader object
 	unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
