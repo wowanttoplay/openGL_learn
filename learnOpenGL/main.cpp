@@ -110,6 +110,13 @@ glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 		//draw
 		//-----------------
 		glUseProgram(shaderProgram);
+		//¸üÐÂuniformÑÕÉ«
+		float timeValue = glfwGetTime();
+		float greenValue = sin(timeValue) / 2.0 + 0.5f;
+		int vertexColorLocation = glGetUniformLocation(shaderProgram, "ourColor");
+		glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
+
+
 		glBindVertexArray(VAO);
 
 		//glDrawArrays(GL_TRIANGLES, 0, 3);

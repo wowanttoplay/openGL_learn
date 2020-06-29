@@ -1,2 +1,4 @@
 ﻿  main.cpp
+C:\Users\94842\source\repos\openGL_learn\learnOpenGL\main.cpp(114,19): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+C:\Users\94842\source\repos\openGL_learn\learnOpenGL\main.cpp(115,20): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
   learnOpenGL.vcxproj -> C:\Users\94842\source\repos\openGL_learn\learnOpenGL\x64\Debug\learnOpenGL.exe

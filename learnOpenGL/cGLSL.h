@@ -25,21 +25,25 @@ float verticesQuard[] =
 unsigned int indices[] =
 {
 	0, 1, 3,
-	1, 2, 3
+	/*1, 2, 3*/
 };
 
-const char* vertexShaderSrc = "#version 330 core\n"
-"layout (location = 0) in vec3 aPos;\n"
+const char* vertexShaderSrc = "#version 330 core\n "
+"layout (location = 0) in vec3 aPos;//位置变量的属性位置值为0\n"
+"out vec4 vertexColor; // 为片段着色器指定颜色输出\n "
 "void main() \n"
 "{\n"
-"gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+"	gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+"	vertexColor = vec4(0.5, 0.0, 0.0, 1.0);\n"
 "}\n";
 
 const char* fragmentShaderSrc = "#version 330 core\n"
+"in vec4 vertexColor;//从顶点着色器传来的输入变量\n "
+"uniform vec4 ourColor;\n"
 "out vec4 fragColor;\n"
 "void main()\n"
 "{\n"
-"fragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
+"	fragColor = ourColor;\n"
 "}\n";
 
 
