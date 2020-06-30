@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include "cGLSL.h"
+#include "shader.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window);
@@ -72,26 +73,7 @@ int main()
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GL_FLOAT), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
 
-	//create vertex shader object
-	unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
-	glShaderSource(vertexShader, 1, &vertexShaderSrc, NULL);
-	checkShader(vertexShader);
-
-	//create fragment shader
-	unsigned int fragementShader = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(fragementShader, 1, &fragmentShaderSrc, NULL);
-	checkShader(fragementShader);
-
-	//link shaders
-	unsigned int shaderProgram = glCreateProgram();
-	glAttachShader(shaderProgram, vertexShader);
-	glAttachShader(shaderProgram, fragementShader);
-	glLinkProgram(shaderProgram);
-	checkLinks(shaderProgram);
-	
-	//clear shader
-	glDeleteShader(vertexShader);
-	glDeleteShader(fragementShader);
+	shader shaderProgram(vertexShaderSrc, fragmentShaderSrc);
 
 
 	// render loop
@@ -109,7 +91,7 @@ int main()
 		
 		//draw
 		//-----------------
-		glUseProgram(shaderProgram);
+		shaderProgram.use();
 		glBindVertexArray(VAO);
 		glDrawArrays(GL_TRIANGLES, 0, 3);
 
