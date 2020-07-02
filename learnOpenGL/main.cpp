@@ -4,22 +4,12 @@
 #include <iostream>
 #include "cGLSL.h"
 #include "shader.h"
+#include "stb/stb_image.h"
+#include "stb/stb_image_write.h"
+
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window);
-
-// settings
-const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 600;
-
-//vertic point
-float vertices[] =
-{
-	-0.5f, -0.5f, 0.0f,		1.0f, 0.0f, 0.0f,
-	0.5f, -0.5f, 0.0f,		0.0f, 1.0f, 0.0f,
-	0.0f, 0.5f, 0.0f,			0.0f, 0.0f, 1.0f
-};
-
 
 int main()
 {

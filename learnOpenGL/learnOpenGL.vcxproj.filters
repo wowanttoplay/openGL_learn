@@ -24,12 +24,21 @@
     <ClCompile Include="shader.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cGLSL.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="shader.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

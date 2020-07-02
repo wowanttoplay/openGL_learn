@@ -1,5 +1,8 @@
 #pragma
 #include <string>
+
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb/stb_image.h"
 using namespace std;
 
 const char* vertexShaderSrc = "#version 330 core\n"
@@ -20,29 +23,21 @@ const char* fragmentShaderSrc = "#version 330 core\n"
 "fragColor = vec4(ourColor, 1.0f);\n"
 "}\n";
 
+// settings
+const unsigned int SCR_WIDTH = 800;
+const unsigned int SCR_HEIGHT = 600;
 
-//check the shader is success compile
-void checkShader(unsigned int shader) 
+//vertic point
+float vertices[] =
 {
-	int success = false;
-	char infoLog[512] = { 0 };
-	glCompileShader(shader);
-	glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
-	if (!success)
-	{
-		glGetShaderInfoLog(shader, 512, NULL, infoLog);
-		std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
-	}
-}
+	-0.5f, -0.5f, 0.0f,		1.0f, 0.0f, 0.0f,
+	0.5f, -0.5f, 0.0f,		0.0f, 1.0f, 0.0f,
+	0.0f, 0.5f, 0.0f,			0.0f, 0.0f, 1.0f
+};
 
-void checkLinks(unsigned int linkProgram)
+float textureCoors[] =
 {
-	int success;
-	char infoLog[512];
-	glGetProgramiv(linkProgram, GL_LINK_STATUS, &success);
-	if (!success)
-	{
-		glGetProgramInfoLog(linkProgram, 512, NULL, infoLog);
-		std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
-	}
-}
+	0.0f, 0.0f,
+	1.0f, 0.0f,
+	0.5f, 1.0f
+};
