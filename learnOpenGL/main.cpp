@@ -3,6 +3,8 @@
 
 #include <iostream>
 #include "cGLSL.h"
+#include "Shader.h"
+#include "Texture.h"
 
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -61,8 +63,6 @@ glGenBuffers(1, &VBO);
 glBindBuffer(GL_ARRAY_BUFFER, VBO);
 glBufferData(GL_ARRAY_BUFFER, sizeof(verticesQuard), verticesQuard, GL_STATIC_DRAW);
 
-
-
 //get EBO
 unsigned int EBO;
 glGenBuffers(1, &EBO);
@@ -70,30 +70,25 @@ glGenBuffers(1, &EBO);
 glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-
-
-
 	//2. 设置顶点属性指针
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GL_FLOAT), (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GL_FLOAT), (void*)0);
 	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GL_FLOAT), (void*)(3 * sizeof(GL_FLOAT)));
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GL_FLOAT), (void*)(6 * sizeof(GL_FLOAT)));
+	glEnableVertexAttribArray(2);
 
 	glBindVertexArray(0);
 
-	//create vertex shader object
-	unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
-	glShaderSource(vertexShader, 1, &vertexShaderSrc, NULL);
-	checkShader(vertexShader);
+	shader shaderProgram(vertexShaderSrc, fragmentShaderSrc);
+	vector<Texture>TexVec;
+	TexVec.emplace_back(Texture("./icon/container.jpg"));
+	TexVec.emplace_back(Texture("./icon/awesomeface.png"));
 
-	//create fragment shader
-	unsigned int fragementShader = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(fragementShader, 1, &fragmentShaderSrc, NULL);
-	checkShader(fragementShader);
-
-	//link shaders
-	unsigned int shaderProgram = glCreateProgram();
-	vector<unsigned int>shaderVec = { vertexShader, fragementShader };
-	glLink(shaderVec, shaderProgram);
-
+	//set texture uniform
+	shaderProgram.use();
+	shaderProgram.setInt("texture0", 0);
+	shaderProgram.setInt("texture1", 1);
 	// render loop
 	// -----------
 	while (!glfwWindowShouldClose(window))
@@ -104,17 +99,22 @@ glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
 		// render
 		// ------
-		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 		
 		//draw
 		//-----------------
-		glUseProgram(shaderProgram);
+		for (int i = 0; i < TexVec.size(); ++i)
+		{
+			glActiveTexture(GL_TEXTURE0 + i);
+			TexVec[i].bindTexture();
+		}
+		
 		glBindVertexArray(VAO);
-
+		shaderProgram.use();
 		//glDrawArrays(GL_TRIANGLES, 0, 3);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 		
 		glBindVertexArray(0);
@@ -132,7 +132,7 @@ glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 #ifdef USE_EBO
 	glDeleteBuffers(1, &EBO);
 #endif
-	glDeleteProgram(shaderProgram);
+	glDeleteProgram(shaderProgram.getID());
 
 	// glfw: terminate, clearing all previously allocated GLFW resources.
 	// ------------------------------------------------------------------
