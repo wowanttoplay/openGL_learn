@@ -61,6 +61,12 @@ void shader::setFloat(const string& name, float value) const
 	glUniform1f(pos, value);
 }
 
+void shader::setMate4(const string& name, glm::mat4& trans)
+{
+	int pos = glGetUniformLocation(m_id, name.c_str());
+	glUniformMatrix4fv(pos, 1, GL_FALSE, glm::value_ptr(trans));
+}
+
 string shader::getShaderCode(const string& shaderFilePath)
 {
 	ifstream in(shaderFilePath);

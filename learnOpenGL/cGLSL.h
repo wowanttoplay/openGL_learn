@@ -2,6 +2,9 @@
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 #include <string>
 #include <vector>
@@ -9,6 +12,10 @@
 
 
 using namespace std;
+// settings
+const unsigned int SCR_WIDTH = 800;
+const unsigned int SCR_HEIGHT = 600;
+
 
 float vertices[] =
 {
@@ -41,9 +48,11 @@ const char* vertexShaderSrc =
 "out vec3 ourColor;\n"
 "out vec2 TexCoord;\n"
 
+"uniform mat4 transform;"
+
 "void main() \n"
 "{\n"
-"gl_Position = vec4(aPos, 1.0);\n"
+"gl_Position = transform * vec4(aPos, 1.0);\n"
 "ourColor = aColor;\n"
 "TexCoord = aTexCoord;\n"
 "}\n";
@@ -68,44 +77,4 @@ const char* fragmentShaderSrc =
 "}\n";
 
 
-//check the shader is success compile
-//void checkShader(unsigned int shader) 
-//{
-//	int success = false;
-//	char infoLog[512] = { 0 };
-//	glCompileShader(shader);
-//	glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
-//	if (!success)
-//	{
-//		glGetShaderInfoLog(shader, 512, NULL, infoLog);
-//		std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
-//	}
-//}
 
-//void checkLinks(unsigned int linkProgram)
-//{
-//	int success;
-//	char infoLog[512];
-//	glGetProgramiv(linkProgram, GL_LINK_STATUS, &success);
-//	if (!success)
-//	{
-//		glGetProgramInfoLog(linkProgram, 512, NULL, infoLog);
-//		std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
-//	}
-//}
-
-//link shader program and delete shader
-//void glLink(vector<unsigned int> shader, unsigned int program)
-//{
-//	for (unsigned int cell : shader)
-//	{
-//		glAttachShader(program, cell);
-//	}
-//	glLinkProgram(program);
-//	checkLinks(program);
-//
-//	for (unsigned int cell : shader)
-//	{
-//		glDeleteShader(cell);
-//	}
-//}
