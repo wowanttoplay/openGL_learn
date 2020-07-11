@@ -17,11 +17,61 @@ const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 
 
-float vertices[] =
-{
-	-0.5f, -0.5f, 0.0f,
-	0.5f, -0.5f, 0.0f,
-	0.0f, 0.5f, 0.0f
+float vertices[] = {
+	-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+	 0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
+	 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+	 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+	-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+	-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+
+	-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+	 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+	 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+	 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+	-0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
+	-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+
+	-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+	-0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+	-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+	-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+	-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+	-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+	 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+	 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+	 0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+	 0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+	 0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+	 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+	-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+	 0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
+	 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+	 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+	-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+	-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+
+	-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+	 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+	 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+	 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+	-0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
+	-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
+};
+
+glm::vec3 cubePositions[] = {
+  glm::vec3(0.0f,  0.0f,  0.0f),
+  glm::vec3(2.0f,  5.0f, -15.0f),
+  glm::vec3(-1.5f, -2.2f, -2.5f),
+  glm::vec3(-3.8f, -2.0f, -12.3f),
+  glm::vec3(2.4f, -0.4f, -3.5f),
+  glm::vec3(-1.7f,  3.0f, -7.5f),
+  glm::vec3(1.3f, -2.0f, -2.5f),
+  glm::vec3(1.5f,  2.0f, -2.5f),
+  glm::vec3(1.5f,  0.2f, -1.5f),
+  glm::vec3(-1.3f,  1.0f, -1.5f)
 };
 
 float verticesQuard[] =
@@ -48,11 +98,13 @@ const char* vertexShaderSrc =
 "out vec3 ourColor;\n"
 "out vec2 TexCoord;\n"
 
-"uniform mat4 transform;"
+"uniform mat4 model;\n"
+"uniform mat4 view;\n"
+"uniform mat4 projection;\n"
 
 "void main() \n"
 "{\n"
-"gl_Position = transform * vec4(aPos, 1.0);\n"
+"gl_Position =projection * view * model * vec4(aPos, 1.0);\n"
 "ourColor = aColor;\n"
 "TexCoord = aTexCoord;\n"
 "}\n";
@@ -65,7 +117,7 @@ const char* fragmentShaderSrc =
 "in vec3 ourColor;\n"
 "in vec2 TexCoord;\n"
 
-//"uniform sampler2D ourTexture;\n" 
+"uniform sampler2D ourTexture;\n" 
 "uniform sampler2D texture0;\n"
 "uniform sampler2D texture1;\n"
 

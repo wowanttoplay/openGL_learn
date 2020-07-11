@@ -60,21 +60,23 @@ unsigned int VBO;
 glGenBuffers(1, &VBO);
 //1. 复制顶点信息到缓冲中供opengl使用
 glBindBuffer(GL_ARRAY_BUFFER, VBO);
-glBufferData(GL_ARRAY_BUFFER, sizeof(verticesQuard), verticesQuard, GL_STATIC_DRAW);
+//glBufferData(GL_ARRAY_BUFFER, sizeof(verticesQuard), verticesQuard, GL_STATIC_DRAW);
+glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
 //get EBO
 unsigned int EBO;
 glGenBuffers(1, &EBO);
-//1. 复制顶点的索引信息到EBO中
+////1. 复制顶点的索引信息到EBO中
 glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
 	//2. 设置顶点属性指针
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GL_FLOAT), (void*)0);
+	//glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GL_FLOAT), (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GL_FLOAT), (void*)0);
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GL_FLOAT), (void*)(3 * sizeof(GL_FLOAT)));
 	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GL_FLOAT), (void*)(6 * sizeof(GL_FLOAT)));
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GL_FLOAT), (void*)(3 * sizeof(GL_FLOAT)));
 	glEnableVertexAttribArray(2);
 
 	glBindVertexArray(0);
@@ -88,6 +90,9 @@ glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 	shaderProgram.use();
 	shaderProgram.setInt("texture0", 0);
 	shaderProgram.setInt("texture1", 1);
+
+	//gl set
+	glEnable(GL_DEPTH_TEST);
 	// render loop
 	// -----------
 	while (!glfwWindowShouldClose(window))
@@ -99,7 +104,8 @@ glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 		// render
 		// ------
 		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 		
 		//draw
 		//-----------------
@@ -112,12 +118,26 @@ glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 		glBindVertexArray(VAO);
 		shaderProgram.use();
 
-		glm::mat4 trans(1.0f);
-		trans = glm::translate(trans, glm::vec3(0.5f, 0.5f, 0.0f));
-		trans = glm::rotate(trans, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
-		shaderProgram.setMate4("transform", trans);
-		//glDrawArrays(GL_TRIANGLES, 0, 3);
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		glm::mat4 /*model(1.0f),*/ view(1.0), projection(1.0);
+		//model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0, 0.0, 0.0));
+		//model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5, 1.0, 0.0));
+		view = glm::translate(view, glm::vec3(0.0, 0.0, -5.0));
+		projection = glm::perspective(glm::radians(45.0), (double)SCR_WIDTH/SCR_HEIGHT, 0.1, 100.0);
+
+
+		//shaderProgram.setMate4("transform",model);
+		shaderProgram.setMate4("view", view);
+		shaderProgram.setMate4("projection", projection);
+		for (int i = 0; i < 10; ++i)
+		{
+			glm::mat4 model(1.0);
+			model = glm::translate(model, cubePositions[i]);
+			model = glm::rotate(model, (float)glm::radians(20.0 * i) * (float)glfwGetTime(), glm::vec3(1.0, 0.3, 0.5));
+			shaderProgram.setMate4("model", model);
+			glDrawArrays(GL_TRIANGLES, 0, 36);
+		}
+		//glDrawArrays(GL_TRIANGLES, 0, 36);
+		//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 		
