@@ -146,12 +146,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\GLAD\glad\src\glad.c" />
+    <ClCompile Include="camera.cpp" />
     <ClCompile Include="Icon.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="camera.h" />
     <ClInclude Include="cGLSL.h" />
     <ClInclude Include="Icon.h" />
     <ClInclude Include="Shader.h" />
