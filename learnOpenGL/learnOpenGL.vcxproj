@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -80,8 +80,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Users\94842\source\repos\openGL_learn\learnOpenGL\finished;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\94842\source\repos\openGL_learn\learnOpenGL\finished;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\94842\source\repos\openGL_learn\learnOpenGL\shader;C:\Users\94842\source\repos\openGL_learn\learnOpenGL\finished;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\94842\source\repos\openGL_learn\learnOpenGL\finished;C:\Users\94842\source\repos\openGL_learn\learnOpenGL\shader;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -146,18 +146,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\GLAD\glad\src\glad.c" />
-    <ClCompile Include="camera.cpp" />
-    <ClCompile Include="Icon.cpp" />
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Shader.cpp" />
-    <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="Shader_m.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="camera.h" />
-    <ClInclude Include="cGLSL.h" />
-    <ClInclude Include="Icon.h" />
-    <ClInclude Include="Shader.h" />
-    <ClInclude Include="Texture.h" />
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="Shader_m.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
