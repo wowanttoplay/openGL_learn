@@ -1,18 +1,18 @@
 ﻿  main.cpp
 C:\Users\94842\source\repos\openGL_learn\learnOpenGL\Shader_m.h(56,40): warning C4101: “e”: 未引用的局部变量
-C:\Users\94842\source\repos\openGL_learn\learnOpenGL\main.cpp(207,28): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-C:\Users\94842\source\repos\openGL_learn\learnOpenGL\main.cpp(237,134): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
-C:\Users\94842\source\repos\openGL_learn\learnOpenGL\main.cpp(237,105): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
-C:\Users\94842\source\repos\openGL_learn\learnOpenGL\main.cpp(237,76): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
-C:\Users\94842\source\repos\openGL_learn\learnOpenGL\main.cpp(241,58): warning C4305: “参数”: 从“double”到“float”截断
-C:\Users\94842\source\repos\openGL_learn\learnOpenGL\main.cpp(242,62): warning C4305: “参数”: 从“double”到“float”截断
-C:\Users\94842\source\repos\openGL_learn\learnOpenGL\main.cpp(283,57): warning C4305: “参数”: 从“double”到“float”截断
-C:\Users\94842\source\repos\openGL_learn\learnOpenGL\main.cpp(284,61): warning C4305: “参数”: 从“double”到“float”截断
-C:\Users\94842\source\repos\openGL_learn\learnOpenGL\main.cpp(386,17): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-C:\Users\94842\source\repos\openGL_learn\learnOpenGL\main.cpp(387,17): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-C:\Users\94842\source\repos\openGL_learn\learnOpenGL\main.cpp(391,19): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-C:\Users\94842\source\repos\openGL_learn\learnOpenGL\main.cpp(392,19): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-C:\Users\94842\source\repos\openGL_learn\learnOpenGL\main.cpp(394,13): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-C:\Users\94842\source\repos\openGL_learn\learnOpenGL\main.cpp(395,13): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-C:\Users\94842\source\repos\openGL_learn\learnOpenGL\main.cpp(404,31): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+C:\Users\94842\source\repos\openGL_learn\learnOpenGL\main.cpp(210,28): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+C:\Users\94842\source\repos\openGL_learn\learnOpenGL\main.cpp(240,134): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+C:\Users\94842\source\repos\openGL_learn\learnOpenGL\main.cpp(240,105): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+C:\Users\94842\source\repos\openGL_learn\learnOpenGL\main.cpp(240,76): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+C:\Users\94842\source\repos\openGL_learn\learnOpenGL\main.cpp(244,58): warning C4305: “参数”: 从“double”到“float”截断
+C:\Users\94842\source\repos\openGL_learn\learnOpenGL\main.cpp(245,62): warning C4305: “参数”: 从“double”到“float”截断
+C:\Users\94842\source\repos\openGL_learn\learnOpenGL\main.cpp(286,57): warning C4305: “参数”: 从“double”到“float”截断
+C:\Users\94842\source\repos\openGL_learn\learnOpenGL\main.cpp(287,61): warning C4305: “参数”: 从“double”到“float”截断
+C:\Users\94842\source\repos\openGL_learn\learnOpenGL\main.cpp(389,17): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+C:\Users\94842\source\repos\openGL_learn\learnOpenGL\main.cpp(390,17): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+C:\Users\94842\source\repos\openGL_learn\learnOpenGL\main.cpp(394,19): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+C:\Users\94842\source\repos\openGL_learn\learnOpenGL\main.cpp(395,19): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+C:\Users\94842\source\repos\openGL_learn\learnOpenGL\main.cpp(397,13): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+C:\Users\94842\source\repos\openGL_learn\learnOpenGL\main.cpp(398,13): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+C:\Users\94842\source\repos\openGL_learn\learnOpenGL\main.cpp(407,31): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
   learnOpenGL.vcxproj -> C:\Users\94842\source\repos\openGL_learn\learnOpenGL\x64\Debug\learnOpenGL.exe
